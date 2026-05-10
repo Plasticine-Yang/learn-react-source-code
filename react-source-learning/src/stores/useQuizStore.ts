@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { getDb } from "@/lib/db";
 
 interface QuizQuestion {
   id: number;
@@ -93,13 +94,25 @@ export const useQuizStore = create<QuizState>((set, get) => ({
     });
   },
 
-  submitQuiz: () => {
-    const { questions, answers } = get();
+  submitQuiz: async () => {
+    const { questions, answers, moduleId } = get();
     const score = answers.reduce(
       (acc: number, answer, i) => (answer === questions[i]?.correctIndex ? acc + 1 : acc),
       0,
     );
     set({ isSubmitted: true, score });
+
+    // Persist to database
+    try {
+      const db = await getDb();
+      await db.execute(
+        `INSERT INTO quiz_results (module_id, score, total, answers)
+         VALUES ($1, $2, $3, $4)`,
+        [moduleId ?? "unknown", score, questions.length, JSON.stringify(answers)],
+      );
+    } catch (e) {
+      console.error("Failed to save quiz result:", e);
+    }
   },
 
   resetQuiz: () => set({ isSubmitted: false, answers: [], currentQuestion: 0, score: null }),

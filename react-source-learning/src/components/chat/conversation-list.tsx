@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useConversationStore } from "@/stores/useConversationStore";
+import { useCourseStore } from "@/stores/useCourseStore";
 import { Plus } from "@/lib/icons";
 
 export function ConversationList() {
@@ -9,6 +10,7 @@ export function ConversationList() {
   const setActive = useConversationStore((s) => s.setActiveConversation);
   const create = useConversationStore((s) => s.createConversation);
   const remove = useConversationStore((s) => s.deleteConversation);
+  const currentModuleId = useCourseStore((s) => s.currentModuleId);
 
   useEffect(() => {
     loadConversations();
@@ -26,7 +28,7 @@ export function ConversationList() {
         <div
           className="flex items-center justify-center rounded cursor-pointer"
           style={{ width: 26, height: 26 }}
-          onClick={() => create("module-02")}
+          onClick={() => create(currentModuleId ?? "module-02")}
         >
           <Plus size={14} style={{ color: "var(--font-secondary)" }} />
         </div>

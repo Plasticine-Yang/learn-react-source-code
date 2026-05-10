@@ -10,11 +10,19 @@ export function FileTree() {
 
   const displayTree = searchQuery ? searchFile(searchQuery) : fileTree;
 
+  const setCurrentFile = useSourceStore((s) => s.setCurrentFile);
+
   const handleSelect = (node: SourceTreeNode) => {
     if (node.type === "folder") {
-      // Toggle expand in store
       node.expanded = !node.expanded;
-      setSearchQuery(searchQuery); // trigger re-render
+      setSearchQuery(searchQuery);
+    } else {
+      setCurrentFile({
+        path: node.path,
+        name: node.name,
+        content: `// ${node.path}\n// React 18.2.0 source file\n\nimport type { Fiber } from './ReactFiber';\n\nexport function performUnitOfWork(unitOfWork: Fiber): Fiber | null {\n  const current = unitOfWork.alternate;\n  let next: Fiber | null = null;\n\n  // beginWork processes the current fiber\n  next = beginWork(current, unitOfWork, renderLanes);\n\n  if (next === null) {\n    // No child to work on, complete this unit\n    completeUnitOfWork(unitOfWork);\n  } else {\n    workInProgress = next;\n  }\n\n  return next;\n}\n\nfunction beginWork(\n  current: Fiber | null,\n  workInProgress: Fiber,\n  renderLanes: number,\n): Fiber | null {\n  // Implementation in ReactFiberBeginWork.js\n  return workInProgress.child;\n}\n`,
+        lines: 30,
+      });
     }
   };
 

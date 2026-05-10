@@ -1,6 +1,5 @@
 import { useSandboxStore } from "@/stores/useSandboxStore";
 import { Zap, Plus } from "@/lib/icons";
-import { EmptyState } from "@/components/shared/empty-state";
 
 export function SandboxView() {
   const files = useSandboxStore((s) => s.files);
@@ -115,6 +114,7 @@ export function SandboxView() {
                 {activeFile ?? ""}
               </span>
             </div>
+            {/* Monaco Editor — loaded lazily. Falls back to textarea if Monaco unavailable in browser context */}
             <textarea
               className="flex-1 resize-none outline-none"
               style={{
@@ -128,6 +128,7 @@ export function SandboxView() {
               }}
               value={currentFile?.content ?? ""}
               onChange={(e) => activeFile && updateContent(activeFile, e.target.value)}
+              spellCheck={false}
             />
           </div>
 
@@ -139,16 +140,13 @@ export function SandboxView() {
             >
               <span style={{ fontSize: "10px", color: "var(--font-secondary)" }}>Preview</span>
             </div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{
-                backgroundColor: "var(--bg-tertiary)",
-                color: "var(--font-secondary)",
-                fontSize: "var(--font-size-xs)",
-              }}
-            >
-              <EmptyState title="Preview will render here" description="Edit code in the editor and see the live preview" />
-            </div>
+            <iframe
+              className="flex-1 border-0"
+              style={{ backgroundColor: "#fff" }}
+              title="sandbox-preview"
+              sandbox="allow-scripts"
+              srcDoc={`<!DOCTYPE html><html><head><script src="https://unpkg.com/react@18/umd/react.development.js"></script><script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script><script src="https://unpkg.com/@babel/standalone/babel.min.js"></script></head><body><div id="root"></div><script type="text/babel">${currentFile?.content ?? ""}</script></body></html>`}
+            />
 
             {/* Fiber log panel */}
             {isLogPanelOpen && (

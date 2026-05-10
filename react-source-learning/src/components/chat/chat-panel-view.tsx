@@ -100,17 +100,31 @@ export function ChatPanelView() {
                 ))}
 
                 {agentStatus === "error" && (
-                  <div
-                    className="flex items-center gap-2 rounded-lg"
-                    style={{
-                      padding: 10,
-                      borderLeft: "3px solid var(--accent-pink)",
-                      backgroundColor: "var(--bg-secondary)",
-                      fontSize: "var(--font-size-xs)",
-                      color: "var(--accent-pink)",
-                    }}
-                  >
-                    网络错误，请检查 API 配置后重试
+                  <div className="flex flex-col gap-2">
+                    <div
+                      className="flex items-center gap-2 rounded-lg"
+                      style={{
+                        padding: 10,
+                        borderLeft: "3px solid var(--accent-pink)",
+                        backgroundColor: "var(--bg-secondary)",
+                        fontSize: "var(--font-size-xs)",
+                        color: "var(--accent-pink)",
+                      }}
+                    >
+                      网络错误，请检查 API 配置
+                    </div>
+                    <div
+                      className="flex items-center gap-2 rounded-md cursor-pointer self-start"
+                      style={{ padding: "4px 12px", backgroundColor: "var(--bg-secondary)", color: "var(--font-primary)", fontSize: "var(--font-size-xs)" }}
+                      onClick={() => {
+                        if (messages.length > 0) {
+                          const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
+                          if (lastUserMsg) sendMessage(lastUserMsg.content);
+                        }
+                      }}
+                    >
+                      重试
+                    </div>
                   </div>
                 )}
 
