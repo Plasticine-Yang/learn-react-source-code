@@ -3,7 +3,7 @@ import { Sidebar } from "./Sidebar";
 import { ResizeHandle } from "./ResizeHandle";
 import { ContentArea } from "./ContentArea";
 import { ChatPanel } from "./ChatPanel";
-import { GlobalSearch } from "./GlobalSearch";
+import { GlobalSearch } from "@/components/search/global-search";
 
 export function ShellLayout() {
   return (
