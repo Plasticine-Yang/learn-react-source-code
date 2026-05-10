@@ -1,0 +1,12 @@
+{
+  "id": "module-06",
+  "title": "Concurrent Mode 与 Suspense",
+  "description": "探索 React 18 并发特性的底层机制，包括时间切片、Suspense、Transitions 和 Streaming SSR",
+  "estimatedHours": 3,
+  "sections": [
+    { "id": "01", "title": "Concurrent Mode 概览", "file": "01-concurrent-mode-overview.md" },
+    { "id": "02", "title": "Suspense 原理", "file": "02-suspense.md" },
+    { "id": "03", "title": "Transitions 与 useTransition", "file": "03-transitions.md" },
+    { "id": "04", "title": "Streaming SSR", "file": "04-streaming-ssr.md" }
+  ]
+}

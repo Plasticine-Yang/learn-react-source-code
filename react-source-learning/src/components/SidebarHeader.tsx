@@ -1,4 +1,9 @@
+import { useProgressStore } from "@/stores/useProgressStore";
+
 export function SidebarHeader() {
+  const overallProgress = useProgressStore((s) => s.getOverallProgress());
+  const isLoaded = useProgressStore((s) => s.isLoaded);
+
   return (
     <div
       className="flex flex-col"
@@ -35,7 +40,7 @@ export function SidebarHeader() {
               color: "var(--font-secondary)",
             }}
           >
-            学习进度 35%
+            学习进度 {isLoaded ? overallProgress : "..."}%
           </span>
         </div>
       </div>
@@ -46,9 +51,9 @@ export function SidebarHeader() {
         style={{ height: 4, backgroundColor: "var(--bg-secondary)" }}
       >
         <div
-          className="h-full rounded-full"
+          className="h-full rounded-full transition-all duration-500"
           style={{
-            width: "35%",
+            width: `${isLoaded ? overallProgress : 0}%`,
             backgroundColor: "var(--accent-blue)",
           }}
         />

@@ -1,0 +1,11 @@
+{
+  "id": "module-05",
+  "title": "事件系统与合成事件",
+  "description": "理解 React 的合成事件机制、事件委托（Event Delegation）和事件优先级",
+  "estimatedHours": 2,
+  "sections": [
+    { "id": "01", "title": "合成事件系统概述", "file": "01-synthetic-events-overview.md" },
+    { "id": "02", "title": "事件委托机制", "file": "02-event-delegation.md" },
+    { "id": "03", "title": "事件优先级", "file": "03-event-priority.md" }
+  ]
+}

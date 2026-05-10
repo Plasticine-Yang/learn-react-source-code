@@ -1,0 +1,14 @@
+{
+  "id": "module-04",
+  "title": "Hooks 原理",
+  "description": "从源码层面理解 useState、useEffect、useRef、useMemo 等 Hook 的实现机制和调用规则",
+  "estimatedHours": 4,
+  "sections": [
+    { "id": "01", "title": "Hooks 概述与数据结构", "file": "01-hooks-overview.md" },
+    { "id": "02", "title": "useState 实现原理", "file": "02-usestate-implementation.md" },
+    { "id": "03", "title": "useEffect 与清理时机", "file": "03-useeffect-and-cleanup.md" },
+    { "id": "04", "title": "useRef 与 useMemo", "file": "04-useref-and-usememo.md" },
+    { "id": "05", "title": "useCallback 与自定义 Hooks", "file": "05-usecallback-and-custom-hooks.md" },
+    { "id": "06", "title": "Hooks 规则与链表结构", "file": "06-rules-of-hooks.md" }
+  ]
+}

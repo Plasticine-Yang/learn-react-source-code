@@ -1,0 +1,13 @@
+{
+  "id": "module-07",
+  "title": "源码阅读实战：从 createRoot 到提交",
+  "description": "串联前面所有模块的知识，完整走一遍从 ReactDOM.createRoot 到 DOM 提交的全链路",
+  "estimatedHours": 4,
+  "sections": [
+    { "id": "01", "title": "createRoot 与初始化", "file": "01-create-root-to-render.md" },
+    { "id": "02", "title": "完整的 Work Loop 追踪", "file": "02-complete-workloop.md" },
+    { "id": "03", "title": "Commit Phase 深入", "file": "03-commit-phase-deep-dive.md" },
+    { "id": "04", "title": "Scheduler 包深度解析", "file": "04-scheduler-deep-dive.md" },
+    { "id": "05", "title": "React 内部调试技巧", "file": "05-debugging-react-internals.md" }
+  ]
+}

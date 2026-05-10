@@ -1,0 +1,12 @@
+{
+  "id": "module-01",
+  "title": "React 设计哲学与 Virtual DOM",
+  "description": "理解 React 为什么创造 Virtual DOM，它解决了什么问题，以及声明式编程的核心思想",
+  "estimatedHours": 2,
+  "sections": [
+    { "id": "01", "title": "声明式 vs 命令式：React 的编程范式", "file": "01-declarative-vs-imperative.md" },
+    { "id": "02", "title": "Virtual DOM 的设计动机", "file": "02-virtual-dom-motivation.md" },
+    { "id": "03", "title": "createElement 与 JSX 的编译结果", "file": "03-createelement-and-jsx.md" },
+    { "id": "04", "title": "从 Virtual DOM 到 Fiber：架构演进", "file": "04-from-vdom-to-fiber.md" }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "module-03",
+  "title": "Reconciliation（Diff 算法）",
+  "description": "揭秘 React 如何高效比对两棵 Fiber 树，包括单节点 Diff、列表 Diff 和 key 的作用",
+  "estimatedHours": 3,
+  "sections": [
+    { "id": "01", "title": "Diff 算法概述", "file": "01-diff-algorithm-overview.md" },
+    { "id": "02", "title": "单元素 Diff", "file": "02-single-element-diff.md" },
+    { "id": "03", "title": "列表 Diff 与 Key 的作用", "file": "03-list-diff-and-keys.md" },
+    { "id": "04", "title": "完整的 Reconciliation 流程", "file": "04-complete-reconciliation.md" }
+  ]
+}

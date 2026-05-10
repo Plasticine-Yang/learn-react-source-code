@@ -1,0 +1,13 @@
+{
+  "id": "module-02",
+  "title": "Fiber 架构与工作循环",
+  "description": "深入 React Fiber 节点的数据结构、工作循环的调度机制、以及 Render/Commit 两阶段架构",
+  "estimatedHours": 3,
+  "sections": [
+    { "id": "01", "title": "Fiber Node 数据结构", "file": "01-fiber-node-structure.md" },
+    { "id": "02", "title": "Work Loop 与 Scheduler", "file": "02-work-loop-scheduler.md" },
+    { "id": "03", "title": "Render Phase 与 Commit Phase", "file": "03-render-commit-phases.md" },
+    { "id": "04", "title": "Fiber Tree 遍历", "file": "04-fiber-tree-traversal.md" },
+    { "id": "05", "title": "优先级与 Lane 模型", "file": "05-priority-and-lanes.md" }
+  ]
+}

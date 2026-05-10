@@ -1,127 +1,117 @@
-import { useAppStore } from "@/stores/useAppStore";
+import { useEffect } from "react";
+import { useCourseStore } from "@/stores/useCourseStore";
+import { useProgressStore } from "@/stores/useProgressStore";
 import { Check, Circle, BookOpen, ChevronDown } from "@/lib/icons";
 
-interface TreeItem {
-  id: string;
-  type: "module" | "section";
-  title: string;
-  status: "completed" | "active" | "current" | "locked";
-  expanded?: boolean;
-  children?: TreeItem[];
-}
-
-const courseData: TreeItem[] = [
-  {
-    id: "m1", type: "module", title: "Virtual DOM", status: "completed",
-  },
-  {
-    id: "m2", type: "module", title: "Fiber Architecture", status: "current", expanded: true,
-    children: [
-      { id: "m2s1", type: "section", title: "Fiber Node Structure", status: "completed" },
-      { id: "m2s2", type: "section", title: "Work Loop & Scheduler", status: "completed" },
-      { id: "m2s3", type: "section", title: "Render & Commit Phases", status: "active" },
-      { id: "m2s4", type: "section", title: "Fiber Tree Traversal", status: "locked" },
-    ],
-  },
-  {
-    id: "m3", type: "module", title: "Reconciliation", status: "locked",
-  },
-  {
-    id: "m4", type: "module", title: "Hooks 原理", status: "locked",
-  },
-];
-
-function ModuleIcon({ status }: { status: string }) {
-  if (status === "completed") {
-    return <Check size={14} style={{ color: "var(--accent-green)" }} />;
-  }
-  if (status === "current") {
-    return <BookOpen size={14} style={{ color: "var(--font-primary)" }} />;
-  }
-  return <Circle size={14} style={{ color: "var(--font-secondary)" }} />;
-}
-
-function SectionIcon({ status }: { status: string }) {
-  if (status === "completed") {
-    return <Check size={12} style={{ color: "var(--accent-green)" }} />;
-  }
-  if (status === "active") {
-    return <Circle size={12} style={{ color: "var(--accent-blue)" }} />;
-  }
-  return <Circle size={12} style={{ color: "var(--font-secondary)" }} />;
-}
-
-function TreeNode({ item }: { item: TreeItem }) {
-  const currentSection = useAppStore((s) => s.currentModule.section);
-  const isModule = item.type === "module";
-  const isActive = item.status === "current" || item.status === "active";
-  const isCurrentSection = isModule ? false : item.title === currentSection;
-
-  return (
-    <div className="flex flex-col" style={{ gap: 1 }}>
-      <div
-        className="flex items-center rounded-md cursor-pointer"
-        style={{
-          padding: isModule ? "7px 12px" : "4px 16px 4px 36px",
-          gap: isModule ? 8 : 6,
-          backgroundColor:
-            isCurrentSection && !isModule
-              ? "var(--bg-secondary)"
-              : "transparent",
-        }}
-      >
-        {/* Left indicator bar for active module */}
-        {isModule && isActive && (
-          <div
-            className="rounded-full shrink-0"
-            style={{
-              width: 3,
-              height: 24,
-              backgroundColor: "var(--accent-blue)",
-            }}
-          />
-        )}
-        {isModule ? (
-          <ModuleIcon status={item.status} />
-        ) : (
-          <SectionIcon status={item.status} />
-        )}
-        <span
-          className="truncate"
-          style={{
-            fontSize: isModule ? "var(--font-size-sm)" : "var(--font-size-xs)",
-            color:
-              isActive && isModule
-                ? "var(--bg-primary)"
-                : isActive && !isModule
-                  ? "var(--font-primary)"
-                  : "var(--font-secondary)",
-            fontWeight: isActive || isCurrentSection ? 500 : 400,
-          }}
-        >
-          {item.title}
-        </span>
-        {isModule && item.expanded && (
-          <ChevronDown size={12} style={{ color: "var(--font-primary)", marginLeft: "auto" }} />
-        )}
-      </div>
-      {item.expanded &&
-        item.children?.map((child) => (
-          <TreeNode key={child.id} item={child} />
-        ))}
-    </div>
-  );
-}
-
 export function CourseTree() {
+  const modules = useCourseStore((s) => s.modules);
+  const loadModules = useCourseStore((s) => s.loadModules);
+  const currentModuleId = useCourseStore((s) => s.currentModuleId);
+  const currentSectionId = useCourseStore((s) => s.currentSectionId);
+  const loadSection = useCourseStore((s) => s.loadSection);
+  const progress = useProgressStore((s) => s.records);
+
+  useEffect(() => {
+    loadModules();
+  }, [loadModules]);
+
   return (
-    <div
-      className="flex-1 flex flex-col overflow-y-auto"
-      style={{ padding: "0 6px", gap: 1 }}
-    >
-      {courseData.map((item) => (
-        <TreeNode key={item.id} item={item} />
-      ))}
+    <div className="flex-1 flex flex-col overflow-y-auto" style={{ padding: "0 6px", gap: 1 }}>
+      {modules.map((mod) => {
+        const isCurrentMod = mod.id === currentModuleId;
+        const moduleProgress = progress.filter((p) => p.module_id === mod.id);
+        const completed = moduleProgress.filter((p) => p.status === "completed").length;
+        const total = mod.sections.length;
+        const isExpanded = isCurrentMod || completed > 0;
+
+        return (
+          <div key={mod.id} className="flex flex-col" style={{ gap: 1 }}>
+            {/* Module header */}
+            <div
+              className="flex items-center rounded-md cursor-pointer"
+              style={{
+                padding: "7px 12px",
+                gap: 8,
+                backgroundColor: isCurrentMod ? "var(--accent-blue)" : "transparent",
+              }}
+              onClick={() => {
+                if (!isExpanded && mod.sections[0]) {
+                  loadSection(mod.id, mod.sections[0].id);
+                }
+              }}
+            >
+              {isCurrentMod && (
+                <div
+                  className="rounded-full shrink-0"
+                  style={{ width: 3, height: 24, backgroundColor: "var(--accent-blue)" }}
+                />
+              )}
+              {completed === total && total > 0 ? (
+                <Check size={14} style={{ color: isCurrentMod ? "var(--bg-primary)" : "var(--accent-green)" }} />
+              ) : (
+                <BookOpen size={14} style={{ color: isCurrentMod ? "var(--bg-primary)" : "var(--font-secondary)" }} />
+              )}
+              <span
+                className="truncate flex-1"
+                style={{
+                  fontSize: "var(--font-size-sm)",
+                  color: isCurrentMod ? "var(--bg-primary)" : "var(--font-primary)",
+                  fontWeight: isCurrentMod ? 600 : 500,
+                }}
+              >
+                {mod.title}
+              </span>
+              {isExpanded && (
+                <ChevronDown
+                  size={12}
+                  style={{ color: isCurrentMod ? "var(--bg-primary)" : "var(--font-secondary)" }}
+                />
+              )}
+            </div>
+
+            {/* Sections (visible when expanded) */}
+            {isExpanded &&
+              mod.sections.map((sec) => {
+                const isActive = sec.id === currentSectionId && isCurrentMod;
+                const secProgress = progress.find(
+                  (p) => p.module_id === mod.id && p.section_id === sec.id,
+                );
+                const secStatus = secProgress?.status ?? "not_started";
+
+                return (
+                  <div
+                    key={sec.id}
+                    className="flex items-center rounded-md cursor-pointer"
+                    style={{
+                      padding: "4px 16px 4px 36px",
+                      gap: 6,
+                      backgroundColor: isActive ? "var(--bg-secondary)" : "transparent",
+                    }}
+                    onClick={() => loadSection(mod.id, sec.id)}
+                  >
+                    {secStatus === "completed" ? (
+                      <Check size={12} style={{ color: "var(--accent-green)" }} />
+                    ) : isActive ? (
+                      <Circle size={12} style={{ color: "var(--accent-blue)" }} />
+                    ) : (
+                      <Circle size={12} style={{ color: "var(--font-secondary)" }} />
+                    )}
+                    <span
+                      className="truncate"
+                      style={{
+                        fontSize: "var(--font-size-xs)",
+                        color: isActive ? "var(--font-primary)" : "var(--font-secondary)",
+                        fontWeight: isActive ? 500 : 400,
+                      }}
+                    >
+                      {sec.title}
+                    </span>
+                  </div>
+                );
+              })}
+          </div>
+        );
+      })}
     </div>
   );
 }
