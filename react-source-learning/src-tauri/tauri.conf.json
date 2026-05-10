@@ -30,9 +30,7 @@
   },
   "plugins": {
     "sql": {
-      "preload": {
-        "db": "sqlite:react-source-learning.db"
-      }
+      "preload": ["sqlite:react-source-learning.db"]
     }
   }
 }

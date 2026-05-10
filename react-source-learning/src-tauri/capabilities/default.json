@@ -13,6 +13,14 @@
     "store:allow-get",
     "store:allow-set",
     "store:allow-delete",
-    "store:allow-save"
+    "store:allow-save",
+    "store:allow-load",
+    "store:allow-has",
+    "store:allow-keys",
+    "store:allow-values",
+    "store:allow-entries",
+    "store:allow-clear",
+    "store:allow-reset",
+    "store:allow-reload"
   ]
 }
