@@ -1,29 +1,24 @@
+import { useState } from "react";
 import { useDragResize } from "@/hooks/useDragResize";
 
 export function ResizeHandle() {
   const { onMouseDown, isDragging } = useDragResize();
+  const [isHovered, setIsHovered] = useState(false);
+
+  const showColor = isDragging || isHovered;
 
   return (
     <div
       className="shrink-0 cursor-col-resize transition-colors h-full"
       style={{
         width: 4,
-        backgroundColor: isDragging
+        backgroundColor: showColor
           ? "var(--accent-blue)"
           : "transparent",
       }}
       onMouseDown={onMouseDown}
-      onMouseEnter={(e) => {
-        if (!isDragging) {
-          (e.target as HTMLElement).style.backgroundColor =
-            "var(--accent-blue)";
-        }
-      }}
-      onMouseLeave={(e) => {
-        if (!isDragging) {
-          (e.target as HTMLElement).style.backgroundColor = "transparent";
-        }
-      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     />
   );
 }

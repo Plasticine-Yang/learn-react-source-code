@@ -63,15 +63,24 @@ function TreeNode({ item }: { item: TreeItem }) {
         className="flex items-center rounded-md cursor-pointer"
         style={{
           padding: isModule ? "7px 12px" : "4px 16px 4px 36px",
-          gap: 6,
+          gap: isModule ? 8 : 6,
           backgroundColor:
-            isActive && isModule
-              ? "var(--accent-blue)"
-              : isCurrentSection
-                ? "var(--bg-secondary)"
-                : "transparent",
+            isCurrentSection && !isModule
+              ? "var(--bg-secondary)"
+              : "transparent",
         }}
       >
+        {/* Left indicator bar for active module */}
+        {isModule && isActive && (
+          <div
+            className="rounded-full shrink-0"
+            style={{
+              width: 3,
+              height: 24,
+              backgroundColor: "var(--accent-blue)",
+            }}
+          />
+        )}
         {isModule ? (
           <ModuleIcon status={item.status} />
         ) : (

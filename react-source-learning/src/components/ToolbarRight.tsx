@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useAppStore } from "@/stores/useAppStore";
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
@@ -8,9 +9,11 @@ export function ToolbarRight() {
   const toggleTheme = useThemeStore((s) => s.toggleTheme);
   const toggleSearch = useAppStore((s) => s.toggleSearch);
 
-  useKeyboardShortcut([
-    { key: "k", ctrl: true, handler: toggleSearch },
-  ]);
+  const shortcuts = useMemo(
+    () => [{ key: "k", ctrl: true, handler: toggleSearch }],
+    [toggleSearch],
+  );
+  useKeyboardShortcut(shortcuts);
 
   return (
     <div className="flex items-center gap-1.5">

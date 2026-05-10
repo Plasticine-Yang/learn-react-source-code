@@ -19,7 +19,7 @@ export function ContentArea() {
         </span>
         <h1
           style={{
-            fontSize: "var(--font-size-2xl)",
+            fontSize: "26px",
             fontWeight: 700,
             color: "var(--font-primary)",
             fontFamily: "var(--font-sans)",

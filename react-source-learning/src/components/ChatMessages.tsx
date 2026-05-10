@@ -26,7 +26,7 @@ export function ChatMessages() {
             padding: "10px 12px",
             backgroundColor: "var(--chat-ai-bubble)",
             borderRadius: "var(--radius-xl)",
-            fontSize: "var(--font-size-xs)",
+            fontSize: "var(--font-size-base)",
             color: "var(--font-primary)",
             lineHeight: 1.6,
           }}
@@ -35,7 +35,7 @@ export function ChatMessages() {
             <code
               style={{
                 fontFamily: "var(--font-mono)",
-                fontSize: "10px",
+                fontSize: "var(--font-size-xs)",
                 backgroundColor: "var(--bg-tertiary)",
                 padding: "1px 4px",
                 borderRadius: 3,
@@ -69,7 +69,7 @@ export function ChatMessages() {
             padding: "10px 12px",
             backgroundColor: "var(--chat-user-bubble)",
             borderRadius: "var(--radius-xl)",
-            fontSize: "var(--font-size-xs)",
+            fontSize: "var(--font-size-base)",
             color: "var(--font-primary)",
             lineHeight: 1.6,
           }}
