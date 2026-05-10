@@ -10,6 +10,7 @@ export {
   ChevronLeft,
   ChevronRight,
   ArrowUp,
+  ArrowLeft,
   MessageCircle,
   Zap,
   FileCode,
